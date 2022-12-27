@@ -1,0 +1,44 @@
+{
+	"folders": [
+		{
+			"name": "Pump Api",
+			"path": "Pump.Api"
+		},
+		{
+			"name": "Pump Apllication",
+			"path": "Pump.Apllication"
+		},
+		{
+			"name": "Pump Domain",
+			"path": "Pump.Domain"
+		},
+		{
+			"name": "Pump Infra Data",
+			"path": "Pump.Infra.Data"
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/.git": true,
+			"**/.svn": true,
+			"**/.hg": true,
+			"**/CVS": true,
+			"**/.DS_Store": true,
+			"**/bin": true,
+			"**/obj": true,
+			"**/Thumbs.db": true
+		},
+	"editor.rulers": [
+		80,
+		{"column": 120,"color": "#0072f5"}
+	]
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-dotnettools.csharp",
+			"kreativ-software.csharpextensions",
+			"patcx.vscode-nuget-gallery",
+			"k--kato.docomment"
+		]
+	}
+}
