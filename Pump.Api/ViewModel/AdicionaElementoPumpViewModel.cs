@@ -7,9 +7,9 @@ namespace Pump.Api.ViewModel
         {
             Nome = nome;
             Valor = valor;
-            Gramas = gramas;
+            Gramas = gramas;  
         }
-
+       
         public string Nome { get; set; }
         public decimal Valor { get; set; }
         public decimal Gramas { get; set; }

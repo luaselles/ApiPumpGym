@@ -7,13 +7,15 @@ namespace Pump.Api.ViewModel
 {
     public class AtualizarElementoPumpViewModel
     {
-        public AtualizarElementoPumpViewModel(string nome, decimal valor, decimal gramas)
+        public AtualizarElementoPumpViewModel(int id, string nome, decimal valor, decimal gramas)
         {
+            Id = id;
             Nome = nome;
             Valor = valor;
             Gramas = gramas;
         }
 
+        public int Id { get; set; }
         public string Nome { get; set; }
         public decimal Valor { get; set; }
         public decimal Gramas { get; set; }

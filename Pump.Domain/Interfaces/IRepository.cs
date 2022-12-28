@@ -9,6 +9,7 @@ namespace Pump.Domain.Interfaces
     public interface IRepository
     {
         // List<ElementoPumpEntity> GetElementos();
+        Boolean GetAnyId(int id);
         ElementoPumpEntity? GetElementoId(int id);
         Boolean InsertElemento(ElementoPumpEntity model);
         Boolean DeleteElemento(ElementoPumpEntity model);

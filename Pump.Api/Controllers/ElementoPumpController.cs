@@ -1,21 +1,24 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Pump.Api.ViewModel;
-using Pump.Domain.Entity;
 using Pump.Domain.Interfaces;
+using MediatR;
+using Pump.Apllication.Commands;
 
 namespace Pump.Api.Controllers
 {
     [Route("[controller]")]
     public class ElementoPumpController : Controller
     {
+        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
         private readonly IRepository _repositoryElemento;
 
-        public ElementoPumpController(IRepository repositoryElemento, IMapper mapper)
+        public ElementoPumpController(IRepository repositoryElemento, IMapper mapper, IMediator mediator)
         {
             _repositoryElemento = repositoryElemento;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         /// <summary>
@@ -32,54 +35,60 @@ namespace Pump.Api.Controllers
                 var elementoMapeado = _mapper.Map<ElementoDetalheViewModel>(elementoEncontrado);
                 return Ok(elementoEncontrado);
             }
+            
             return NotFound();
         }
 
         /// <summary>
-        /// Inserindo produto (elemento) gym
+        /// Inserindo produto (elemento) gym Mediator
         /// </summary>
         /// <param name="addmodel"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Insert ([FromBody] AdicionaElementoPumpViewModel addmodel)
+        public async Task<IActionResult> Insert([FromBody] AdicionaElementoPumpViewModel addmodel)
         {
-            var elementoAdd = _mapper.Map<ElementoPumpEntity>(addmodel);
-            if (_repositoryElemento.InsertElemento(elementoAdd))
+            var retorno = await _mediator.Send(new CadastrarElementoPumpCommand(addmodel.Nome, addmodel.Valor, addmodel.Gramas));
+            if(retorno)
             {
                 return Accepted();
             }
-            
+
+            return NotFound();
+
+        }
+
+        /// <summary>
+        /// Alterando produto (elemento) gym Mediator
+        /// </summary>
+        /// <param name="atualizamodel"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] AtualizarElementoPumpViewModel atualizamodel)
+        {
+            var retorno = await _mediator.Send(new AtualizarElementoPumpCommand(atualizamodel.Id, atualizamodel.Nome, atualizamodel.Valor, atualizamodel.Gramas));
+            if (retorno)
+            {
+                return NoContent();
+            }
+
             return NotFound();
         }
-    
+
         /// <summary>
-        /// Deletando produto (elemento) gym
+        /// Deletando produto (elemento) gym Mediator
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if(_repositoryElemento.DeleteElemento(id))
+            var retorno = await _mediator.Send(new DeletarElementoPumpCommand(id));
+            if (retorno)
             {
                 return NoContent();
             }
 
-            return NotFound();
-        }
-   
-        [HttpPut("id")]
-        public IActionResult Update(int id, [FromBody] AtualizarElementoPumpViewModel atualizamodel)
-        {
-            var buscaModel = _repositoryElemento.GetElementoId(id);
-            buscaModel = _mapper.Map(atualizamodel, buscaModel);
-
-            if(buscaModel != null && _repositoryElemento.UpdateElemento(buscaModel))
-            {
-                return NoContent();
-            }
-
-            return NotFound();
-        }
+            return NotFound();   
+        }        
     }
 }

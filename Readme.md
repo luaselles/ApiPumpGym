@@ -36,3 +36,8 @@
 >> dotnet ef --project ..\Exemplo.Infra.Data\
 ### Criando Base de Dados pelo terminal.
 >> dotnet ef database update
+
+## Mediator
+
+Comando e Consultas
+mediator command and query

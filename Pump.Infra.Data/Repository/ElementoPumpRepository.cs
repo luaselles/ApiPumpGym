@@ -21,11 +21,17 @@ namespace Pump.Infra.Data.Repository
         public bool DeleteElemento(int id)
         {
             var elementoDeletar = _db.Elemento.SingleOrDefault(x => x.Id == id);
-            if(elementoDeletar != null)
+            if (elementoDeletar != null)
             {
                 return DeleteElemento(elementoDeletar);
             }
             return false;
+        }
+
+        public bool GetAnyId(int id)
+        {
+            var existe = _db.Elemento.Any(x => x.Id == id);
+            return existe;
         }
 
         public virtual ElementoPumpEntity? GetElementoId(int id)
