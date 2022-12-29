@@ -4,6 +4,7 @@ using Pump.Api.ViewModel;
 using Pump.Domain.Interfaces;
 using MediatR;
 using Pump.Apllication.Commands;
+using Pump.Apllication.Querys;
 
 namespace Pump.Api.Controllers
 {
@@ -27,16 +28,15 @@ namespace Pump.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public IActionResult GetElementoId(int id)
+        public async Task<IActionResult> GetElementoId(int id)
         {
-            var elementoEncontrado = _repositoryElemento.GetElementoId(id);
-            if (elementoEncontrado != null)
+            var retorno = await _mediator.Send(new ConsultarElementoPumpQuery(id));
+            if (retorno != null)
             {
-                var elementoMapeado = _mapper.Map<ElementoDetalheViewModel>(elementoEncontrado);
-                return Ok(elementoEncontrado);
+                return Ok(retorno);
             }
-            
-            return NotFound();
+
+            return NotFound(); 
         }
 
         /// <summary>
