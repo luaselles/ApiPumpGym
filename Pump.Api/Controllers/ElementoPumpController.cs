@@ -41,6 +41,12 @@ namespace Pump.Api.Controllers
 
         /// <summary>
         /// Inserindo produto (elemento) gym Mediator
+        /// <remarks>
+        /// <list>
+        /// <item>aaaaa</item>
+        /// <item>aaaaa</item>
+        /// </list>
+        /// </remarks>
         /// </summary>
         /// <param name="addmodel"></param>
         /// <returns></returns>
